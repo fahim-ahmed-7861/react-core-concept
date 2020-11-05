@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import logo from './logo.svg';
 import './App.css';
 
@@ -29,6 +29,10 @@ function App() {
       <p>i am a react person</p>
 
       <Counter></Counter>
+
+      <Todos></Todos>
+
+  
 
      <ul>
 
@@ -67,6 +71,59 @@ function App() {
   );
 
   
+}
+
+
+function Todos()
+{
+    const [todo,setTodo]=useState([]);
+    
+    useEffect(()=>
+    {
+       fetch('https://jsonplaceholder.typicode.com/todos/')
+       .then(res=>res.json())
+       .then(data=>setTodo(data));
+    },[])
+
+  return (
+
+     <div>
+       <h3>TODOS : </h3>
+
+       <ul>
+           
+           {todo.map(td => <li>{td.title}</li>)
+           }
+       </ul>
+     </div>
+  )
+}
+function Users()
+{
+  const [users,setUsers]=useState([]);
+
+  useEffect(()=> {
+
+    fetch('https://jsonplaceholder.typicode.com/posts/')
+    .then(res =>res.json())
+    .then(data=>setUsers(data));
+
+
+  },[])
+    
+  return (
+
+     <div>
+       <h3>Dynamic Users {users.length}</h3>
+
+      <ul>
+
+  {
+     users.map(user => <li>{user.title}  <h3>{user.id}</h3></li>)
+  }
+      </ul>
+     </div>
+  )
 }
 
 
